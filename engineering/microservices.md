@@ -119,5 +119,34 @@ assigned to one team.
 * Incomplete knowledge of the details of a technical capability.
 * Inability to estimate the complexity of a technical capability.
 
+## Microservices collaboration
+Each microservice implements a single capability, but to deliver end-user functionality,
+microservices need to collaborate. Microservices can use three main communication
+styles for collaboration: commands, queries, and events. Each style has its
+strengths and weaknesses, and understanding the tradeoffs between them allows
+you to pick the appropriate one for each microservice collaboration. When you get
+the collaboration style right, you can implement loosely coupled microservices with
+clear boundaries.
+* Commands: Used when one microservice needs another microservice
+to perform an action.
+* Queries: Used when one microservice needs information from another microservice.
+* Events: Used when a microservice needs to react to something that happened in another microservice
+
+Collaboration based on commands and queries should use relatively coarse-grained
+commands and queries. The calls made between microservices are remote calls,
+meaning they cross at least a process boundary and usually also a network. This means
+calls between microservices are relatively slow. Even though the microservices are finegrained,
+you must not fall into the trap of thinking of calls from one microservice to
+another as being like function calls in a microservice.
+
+Furthermore, you should prefer collaboration based on events over collaboration
+based on commands or queries. Event-based collaboration is more loosely coupled
+than the other two forms of collaboration because events are handled asynchronously.
+That means two microservices collaborating through events aren’t temporally coupled;
+the handling of an event doesn’t have to happen immediately after the event is
+raised. Rather, handling can happen when the subscriber is ready to do so. In contrast,
+commands and queries are synchronous and therefore need to be handled
+immediately after they’re sent.
+
 ## Resources
 * [Microservices in .NET 2nd edition](https://www.amazon.es/Microservices-NET-Core-Christian-Gammelgaard/dp/1617297925)
