@@ -148,5 +148,37 @@ raised. Rather, handling can happen when the subscriber is ready to do so. In co
 commands and queries are synchronous and therefore need to be handled
 immediately after they’re sent.
 
+## Failures and errors
+When working with any nontrivial software system, you must expect failures to occur.
+Hardware can fail. Software may fail due to, for instance, unforeseen usage or corrupt
+data. A distinguishing factor of a microservice system is that there’s a lot of communication
+between microservices. You must expect communication to fail from time to time.
+Communication between two microservices may not fail often, but looking at a microservice
+system as a whole, communication failures are likely to occur often due to the
+amount of communication.
+
+Because you have to expect that some of the communication in your microservice
+system will fail, you should design your microservices to be able to cope with those failures. When a communication fails, the impact depends on the type of collaboration and the way the
+microservices cope with it:
+* Query-based collaboration: When a query fails, the caller doesn’t get the information
+it needs. If the caller copes well with that, the system keeps working, but
+with degraded functionality. If the caller doesn’t cope well, the result could be
+an error.
+* Command-based collaboration: When sending a command fails, the sender can’t
+know whether the receiver got the command. Again, depending on how the
+sender copes, this could result in an error, or it could result in degraded
+functionality.
+* Event-based collaboration: When a subscriber polls an event feed but the call
+fails, the impact is limited. The subscriber will poll the event feed again later
+and, assuming the event feed is up again, receive the events at that time. In
+other words, the subscriber will still get all events, but some of them will be
+delayed. This shouldn’t be a problem for an event-based collaboration because
+it’s asynchronous anyway.
+
+### Tips to handle failures
+* Keeping good logs.
+* Using tace IDs.
+* Don't propagate failures
+
 ## Resources
 * [Microservices in .NET 2nd edition](https://www.amazon.es/Microservices-NET-Core-Christian-Gammelgaard/dp/1617297925)
