@@ -180,5 +180,111 @@ it’s asynchronous anyway.
 * Using tace IDs.
 * Don't propagate failures
 
+## Patterns for building applications over microservices
+
+### Composite applications. Integrating at the frontend
+A composite application is made up of functionality drawn from several places—
+in the case of microservices, from different microservices—by communicating with
+each one directly. In this pattern, each microservice provides both functionality and a
+UI for the functionality. Microservices may communicate with each other to perform
+their tasks; the composite application doesn’t care.
+
+When you’re building composite applications, the UI is split into smaller parts according
+to business capabilities, just as functionality is distributed across microservices
+following business capabilities. That means the UI for each business capability is implemented close to the code for the capability and is deployed along with that code.
+Because the composite application draws the UI for the capability from the microservice,
+the application is updated every time a microservice UI is updated. This means
+the agility you gain by splitting the system into small, focused microservices applies to
+the application UI, too.
+
+A composite application is responsible for integrating all the functionality implemented
+throughout the system of microservices. This can be a complex task: there are
+potentially many business capabilities in a microservice system, and the application’s
+UI may not be split along quite the same lines, leading to pages or screens that
+include UIs from several different microservices but that need to feel like a single
+screen to the end user.
+This kind of complexity can mean that the composite application has intimate
+knowledge of how the microservices work and, in particular, how their UIs work. If the
+composite application begins to make too many assumptions about the microservices’
+UIs, it becomes sensitive to changes in each microservice, and thus the application as
+a whole may break because of GUI changes in a single microservice. If you wind up in
+that situation, you lose the agility that’s one of the major advantages of using a composite
+application.
+
+### API Gateway
+An API Gateway is a microservice with a public HTTP API that covers all the system’s
+functionality but doesn’t implement any of the functionality itself. Instead, the API Gateway
+delegates everything to other microservices. In effect, an API Gateway acts like an
+adapter between applications and the system of microservices. When you build applications in front of a microservice system that uses an API Gateway, the applications are shielded from knowing anything about how the system functionality is split across microservices, or even that the system uses microservices. The application only needs to know about one microservice: the API Gateway.
+
+The main benefit of the API Gateway pattern is that it decouples applications nicely
+from the way the system is decomposed into microservices and hides that completely
+from applications. In cases where several applications have overlapping functionality
+or where some applications are built by third parties, using the API Gateway pattern
+facilitates the following:
+* Maintaining a low barrier to entry for building applications.
+* Keeping the public API stable.
+* Keeping the public API backward compatible.
+
+The main disadvantage of the API Gateway pattern is that the API Gateway itself can
+grow into a large codebase and display all the disadvantages of a monolith. This is
+especially true if you succumb to the temptation to implement business logic in the
+API Gateway, which may draw on many other microservices to serve a single request.
+Because it’s combining the data from several microservices anyway, it’s tempting to
+apply a few business rules to the data as well. Doing so may be quick in the short run,
+but it pushes the API Gateway down the path toward becoming a monolith.
+
+### Backend for frontend (BBF) pattern
+The BFF pattern is relevant when you need
+to build more than one application for a microservice system—for instance, the insurance
+system may have a web application for the most common functionality, an iOS
+app that appraisers can use on the road, and a specialized desktop application for
+actuarial tasks. A BFF is a microservice akin to an API Gateway, but it’s specialized for
+one application. If you use this pattern for the applications in the insurance system,
+you’ll have a BFF for the web app, a BFF for the iOS app, and a BFF for the actuarial
+desktop application.
+
+With the BFF pattern, each application gets to use an API that’s tailored exactly to its
+needs. With an API Gateway, there’s a risk of it becoming bloated as you add more and
+more functionality to it over time. With a BFF, this is less of a risk, because the BFF
+doesn’t have to cover everything in the system, only the functionality needed by the
+application it serves.
+
+It’s fairly easy to know when something can be removed from a BFF: when no
+active version of the application it serves uses that functionality. Compare this to an
+API Gateway with several applications in front: something can be removed from the
+API Gateway only when no version of any of the applications uses it. All in all, BFFs
+offer a way to both simplify application development and keep the server-side focused
+and well factored.
+
+In cases where you have several applications that provide similar or overlapping functionality
+to end users—such as having both an iOS app and an Android app targeted
+at the same type of end user—the BFF pattern leads to duplicating code among several
+BFFs. This comes with the usual disadvantages of duplication: duplicated effort
+every time there are changes to the duplicated parts, and a tendency for the duplicated
+parts to drift away from each other over time and end up working slightly differently
+in different applications.
+
+### When to use each pattern
+* How much intelligence do you want to put into the application? For a line-of-business application that’s only used within the company firewall and only on company machines, you may opt to build a desktop application with a lot of intelligence. In that case, the composite application pattern is the obvious choice. For a public-facing e-commerce application meant to run in any browser, with the risk of somebody trying to hack the app, you may shy away from putting
+intelligence into the application, making the composite application pattern less attractive.
+* Is there more than one application? If so, how different are the applications? If you haven’t put much intelligence in the application, and if there’s only one application, or if all applications provide similar functionality—maybe even in similar ways—an API Gateway is probably a good choice. If there are several applications, and they provide different sets of functionality,
+the BFF pattern is a good option. With an API Gateway or with BFFs, the
+intelligence is on the backend. The API Gateway works well as long as it’s
+cohesive—that is, as long as the set of all endpoints exposed by the API Gateway
+has a certain consistency in terms of how applications should use them and how
+they’re structured. If some endpoints follow a remote procedure call (RPC) style and others follow
+a representation state transfer (REST) style, they’re inconsistent, and cohesion
+in the API Gateway codebase will probably be low. In such cases, you should
+consider the BFF pattern. With BFFs, you can have some applications that work
+with an RPC-style API in one BFF and other apps that use a REST API in another,
+without compromising cohesion. Each BFF can be cohesive and consistent by
+itself, but you don’t need consistency among BFFs in terms of API style.
+* How big is the system? With a large system—in terms of the amount of functionality it exposes—an
+API Gateway can become an unmanageable codebase that exposes many of the
+disadvantages of monoliths. With large systems, using a number of BFFs is probably
+a better choice than one big API Gateway. On the other hand, if the system
+isn’t that big, an API Gateway can be simpler than BFFs.
+
 ## Resources
 * [Microservices in .NET 2nd edition](https://www.amazon.es/Microservices-NET-Core-Christian-Gammelgaard/dp/1617297925)
