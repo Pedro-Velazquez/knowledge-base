@@ -62,3 +62,9 @@ A bounded context delimits the applicability of a particular model so that team 
 * Anticorruption layer: The consumer translates the service provider’s model into a model that fits the consumer’s needs.
 * Open-host service: The service provider implements a published language—a model optimized for its consumers’ needs.
 * Separate ways: It’s less expensive to duplicate particular functionality than to collaborate and integrate it.
+
+## References
+
+[Domain-Driven Design: Tackling Complexity in the Heart of Software](https://www.amazon.com/-/es/Eric-Evans/dp/0321125215)
+
+[Learning Domain-Driven Design: Aligning Software Architecture and Business Strategy](https://www.amazon.com/Learning-Domain-Driven-Design-Aligning-Architecture/dp/1098100131)
