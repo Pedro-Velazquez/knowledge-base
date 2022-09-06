@@ -1,12 +1,14 @@
 # Microservices
 
 ## Advantages
+
 * Enable continuous delivery.
 * Allow for an efficient developer workflow because they’re highly maintainable.
 * Are robust by design.
 * Can scale up or down independently of each other.
 
 ## Key characteristics
+
 * A microservice is responsible for a single capability.
 * A microservice is individually deployable.
 * A microservice consists of one or more processes.
@@ -15,111 +17,61 @@
 * A microservice is replaceable.
 
 ## Microservices architecture style
-Microservices as an architectural
-style is a lightweight form of service-oriented architecture (SOA) where the
-services are each tightly focused on doing one thing and doing it well. A system with a
-microservices architecture is a distributed system with a (probably large) number of
-collaborating microservices.
-The microservices architectural style has been quickly gaining in popularity for
-building and maintaining complex server-side software systems. And understandably
-so: microservices offer a number of potential benefits over both more traditional
-service-oriented approaches and monolithic architectures. Microservices, when done
-well, are malleable, scalable, and robust.
+
+Microservices as an architectural style is a lightweight form of service-oriented architecture (SOA) where the services are each tightly focused on doing one thing and doing it well. A system with a
+microservices architecture is a distributed system with a (probably large) number of collaborating microservices. The microservices architectural style has been quickly gaining in popularity for
+building and maintaining complex server-side software systems. And understandably so: microservices offer a number of potential benefits over both more traditional service-oriented approaches and monolithic architectures. Microservices, when done well, are malleable, scalable, and robust.
 
 ## Scoping microservices
-To succeed with microservices, it’s important to be good at scoping each microservice
-appropriately. If your microservices are too big, the turnaround on creating
-new features and implementing bug fixes becomes longer than it needs to. If
-they’re too small, the coupling between microservices tends to grow. If they’re the
-right size but have the wrong boundaries, coupling also tends to grow, and higher
-coupling also leads to longer turnaround. In other words, if you aren’t able to
-scope your microservices correctly, you’ll lose much of the benefit microservices
-offer. The main drivers to identifying and scoping microservices are:
+
+To succeed with microservices, it’s important to be good at scoping each microservice appropriately. If your microservices are too big, the turnaround on creating new features and implementing bug fixes becomes longer than it needs to. If they’re too small, the coupling between microservices tends to grow. If they’re the right size but have the wrong boundaries, coupling also tends to grow, and higher coupling also leads to longer turnaround. In other words, if you aren’t able to
+scope your microservices correctly, you’ll lose much of the benefit microservices offer. The main drivers to identifying and scoping microservices are:
+
 * Business capabilities.
 * Supporting technical capabilities.
 * Supporting efficiency of work.
+
 ### Business capability
+
 A business capability is something an organization does that contributes to business goals. A given business will have a number of business capabilities that together make the overall business function.
-When mapping a business capability to a microservice, the microservice models the
-business capability. In some cases, the microservice implements the entire business
-capability and automates it completely. In other cases, the microservice implements
-only part of the business capability, because some part of the capability is carried out by people in the real world and thus the microservice only partly automates the business capability. In both cases, the scope of the microservice is the business capability.
+When mapping a business capability to a microservice, the microservice models the business capability. In some cases, the microservice implements the entire business capability and automates it completely. In other cases, the microservice implements only part of the business capability, because some part of the capability is carried out by people in the real world and thus the microservice only partly automates the business capability. In both cases, the scope of the microservice is the business capability.
 
-A good understanding of the domain will enable you to understand how the business
-functions. Understanding how the business functions means you can identify the business
-capabilities that make up the business and the processes involved in delivering the
-capabilities. In other words, the way to identify business capabilities is to learn about the
-business’s domain. You can gain this type of knowledge by talking with the people who
-know the business domain best: business analysts, the end users of your software, and so
-on—all the people directly involved in the day-to-day work that drives the business.
+A good understanding of the domain will enable you to understand how the business functions. Understanding how the business functions means you can identify the business capabilities that make up the business and the processes involved in delivering the capabilities. In other words, the way to identify business capabilities is to learn about the business’s domain. You can gain this type of knowledge by talking with the people who know the business domain best: business analysts, the end users of your software, and so on—all the people directly involved in the day-to-day work that drives the business.
 
-A business’s organization usually reflects its domain. Different parts of the domain
-are handled by different groups of people, and each group is responsible for delivering
-certain business capabilities; so, this organization can give you hints about how the
-microservices should be scoped. For one thing, a microservice’s responsibility should
-probably lie within the purview of only one group. If it crosses the boundary between
-two groups, it’s probably too widely scoped and will be difficult to keep cohesive, leading
-to low maintainability.
+A business’s organization usually reflects its domain. Different parts of the domain are handled by different groups of people, and each group is responsible for delivering certain business capabilities; so, this organization can give you hints about how the microservices should be scoped. For one thing, a microservice’s responsibility should probably lie within the purview of only one group. If it crosses the boundary between two groups, it’s probably too widely scoped and will be difficult to keep cohesive, leading to low maintainability.
 
 ### Supporting technical capability
-A supporting technical capability is something that doesn’t directly contribute
-to a business goal but supports other microservices, such as integrating with
-another system or scheduling an event to happen some time in the future. Supporting technical capabilities are secondary drivers in scoping microservices because they don’t directly contribute to the system’s business goals. They exist to simplify and support the other microservices that implement business capabilities. One characteristic of a good microservice is that it’s replaceable; but if a microservice that implements a business capability also implements a complex technical capability, it may grow too large and too complex to be replaceable. In such cases, you should consider implementing the technical capability in a separate microservice
-that supports the original one.
 
-When you introduce supporting technical microservices, your goal is to simplify the
-microservices that implement business capabilities. Sometimes—such as with sending
-notifications—you identify a set of technical capabilities that several microservices
-need, and you turn that into a bounded context with microservices of its own, so
-other microservices can share the implementation. Other times—as with the ERP
-integration—you identify a technical capability that unduly complicates a microservice
-and turn that capability into a microservice of its own. In both cases, the other
-microservices implementing business capabilities are left with one less technical concern
-to take care of.
+A supporting technical capability is something that doesn’t directly contribute to a business goal but supports other microservices, such as integrating with another system or scheduling an event to happen some time in the future. Supporting technical capabilities are secondary drivers in scoping microservices because they don’t directly contribute to the system’s business goals. They exist to simplify and support the other microservices that implement business capabilities. One characteristic of a good microservice is that it’s replaceable; but if a microservice that implements a business capability also implements a complex technical capability, it may grow too large and too complex to be replaceable. In such cases, you should consider implementing the technical capability in a separate microservice that supports the original one.
 
-When deciding to implement a technical capability in a separate microservice, be
-careful that you don’t violate the microservice characteristic of being individually
-deployable. It makes sense to implement a technical capability in a separate microservice
-only if that microservice can be deployed and redeployed independently of
-any other microservices. Likewise, deploying the microservices that are supported by
-the microservice providing the technical capability must not force you to redeploy the
-microservice implementing the technical capability.
+When you introduce supporting technical microservices, your goal is to simplify the microservices that implement business capabilities. Sometimes—such as with sending notifications—you identify a set of technical capabilities that several microservices need, and you turn that into a bounded context with microservices of its own, so
+other microservices can share the implementation. Other times—as with the ERP integration—you identify a technical capability that unduly complicates a microservice and turn that capability into a microservice of its own. In both cases, the other microservices implementing business capabilities are left with one less technical concern to take care of.
 
-Identifying business capabilities and microservices based on business capabilities is
-a strategic exercise, but identifying technical supporting capabilities that could be
-implemented by separate microservices is an opportunistic exercise. The question of
-whether a supporting technical capability should be implemented in its own microservice
-is about what will be easiest in the long run.
+When deciding to implement a technical capability in a separate microservice, be careful that you don’t violate the microservice characteristic of being individually deployable. It makes sense to implement a technical capability in a separate microservice only if that microservice can be deployed and redeployed independently of any other microservices. Likewise, deploying the microservices that are supported by the microservice providing the technical capability must not force you to redeploy the microservice implementing the technical capability.
+
+Identifying business capabilities and microservices based on business capabilities is a strategic exercise, but identifying technical supporting capabilities that could be implemented by separate microservices is an opportunistic exercise. The question of whether a supporting technical capability should be implemented in its own microservice is about what will be easiest in the long run.
 
 ### Supporting efficiency fof work
+
 The microservices we design and create should be efficient to
-work with and should let teams that develop and maintain the microservices work efficiently. If we have an already defined organization that we cannot change, the system of
-microservices we create must align with the organization. On the other hand, if the
-organization can be changed we should do so in accordance with the overall system of
-microservices. This, largely, is a matter of respecting and using Conway’s law:
+work with and should let teams that develop and maintain the microservices work efficiently. If we have an already defined organization that we cannot change, the system of microservices we create must align with the organization. On the other hand, if the
+organization can be changed we should do so in accordance with the overall system of microservices. This, largely, is a matter of respecting and using Conway’s law:
 
-<i>"Any organization that designs a system (defined broadly) will produce a design whose
-structure is a copy of the organization’s communication structure."</i>
+_"Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization’s communication structure."_
 
-First and foremost, respecting Conway’s law means we should make sure that there
-is a clear ownership of each microservice: we should assign one team to the development
-and maintenance of each microservice. This is in line with the microservices
-characteristic that a small team can maintain a few handfuls of microservices. Each
-can be be assigned a few handfuls of services to be responsible for. It is important that
-the responsibility is clear. If the responsibility for a microservice is split between two or
-more teams, we introduce a need for those teams to coordinate closely whenever
-changes to that microservices need to happen. That coordination takes time and
-means that none of the teams involved can work autonomously. This is a form of inefficiency,
-and it is something we can avoid if we make sure each microservices is
+First and foremost, respecting Conway’s law means we should make sure that there is a clear ownership of each microservice: we should assign one team to the development and maintenance of each microservice. This is in line with the microservices characteristic that a small team can maintain a few handfuls of microservices. Each can be be assigned a few handfuls of services to be responsible for. It is important that
+the responsibility is clear. If the responsibility for a microservice is split between two or more teams, we introduce a need for those teams to coordinate closely wheneverchanges to that microservices need to happen. That coordination takes time and means that none of the teams involved can work autonomously. This is a form of inefficiency, and it is something we can avoid if we make sure each microservices is
 assigned to one team.
 
 ## Factors that make it difficult to identify scopes
+
 * Insufficient understanding of the business domain.
 * Confusion in the business domain.
 * Incomplete knowledge of the details of a technical capability.
 * Inability to estimate the complexity of a technical capability.
 
 ## Microservices collaboration
+
 Each microservice implements a single capability, but to deliver end-user functionality,
 microservices need to collaborate. Microservices can use three main communication
 styles for collaboration: commands, queries, and events. Each style has its
@@ -127,6 +79,7 @@ strengths and weaknesses, and understanding the tradeoffs between them allows
 you to pick the appropriate one for each microservice collaboration. When you get
 the collaboration style right, you can implement loosely coupled microservices with
 clear boundaries.
+
 * Commands: Used when one microservice needs another microservice
 to perform an action.
 * Queries: Used when one microservice needs information from another microservice.
@@ -149,6 +102,7 @@ commands and queries are synchronous and therefore need to be handled
 immediately after they’re sent.
 
 ## Failures and errors
+
 When working with any nontrivial software system, you must expect failures to occur.
 Hardware can fail. Software may fail due to, for instance, unforeseen usage or corrupt
 data. A distinguishing factor of a microservice system is that there’s a lot of communication
@@ -160,6 +114,7 @@ amount of communication.
 Because you have to expect that some of the communication in your microservice
 system will fail, you should design your microservices to be able to cope with those failures. When a communication fails, the impact depends on the type of collaboration and the way the
 microservices cope with it:
+
 * Query-based collaboration: When a query fails, the caller doesn’t get the information
 it needs. If the caller copes well with that, the system keeps working, but
 with degraded functionality. If the caller doesn’t cope well, the result could be
@@ -176,6 +131,7 @@ delayed. This shouldn’t be a problem for an event-based collaboration because
 it’s asynchronous anyway.
 
 ### Tips to handle failures
+
 * Keeping good logs.
 * Using tace IDs.
 * Don't propagate failures
@@ -183,6 +139,7 @@ it’s asynchronous anyway.
 ## Patterns for building applications over microservices
 
 ### Composite applications. Integrating at the frontend
+
 A composite application is made up of functionality drawn from several places—
 in the case of microservices, from different microservices—by communicating with
 each one directly. In this pattern, each microservice provides both functionality and a
@@ -212,6 +169,7 @@ that situation, you lose the agility that’s one of the major advantages of usi
 application.
 
 ### API Gateway
+
 An API Gateway is a microservice with a public HTTP API that covers all the system’s
 functionality but doesn’t implement any of the functionality itself. Instead, the API Gateway
 delegates everything to other microservices. In effect, an API Gateway acts like an
@@ -222,6 +180,7 @@ from the way the system is decomposed into microservices and hides that complete
 from applications. In cases where several applications have overlapping functionality
 or where some applications are built by third parties, using the API Gateway pattern
 facilitates the following:
+
 * Maintaining a low barrier to entry for building applications.
 * Keeping the public API stable.
 * Keeping the public API backward compatible.
@@ -235,6 +194,7 @@ apply a few business rules to the data as well. Doing so may be quick in the sho
 but it pushes the API Gateway down the path toward becoming a monolith.
 
 ### Backend for frontend (BBF) pattern
+
 The BFF pattern is relevant when you need
 to build more than one application for a microservice system—for instance, the insurance
 system may have a web application for the most common functionality, an iOS
@@ -266,6 +226,7 @@ parts to drift away from each other over time and end up working slightly differ
 in different applications.
 
 ### When to use each pattern
+
 * How much intelligence do you want to put into the application? For a line-of-business application that’s only used within the company firewall and only on company machines, you may opt to build a desktop application with a lot of intelligence. In that case, the composite application pattern is the obvious choice. For a public-facing e-commerce application meant to run in any browser, with the risk of somebody trying to hack the app, you may shy away from putting
 intelligence into the application, making the composite application pattern less attractive.
 * Is there more than one application? If so, how different are the applications? If you haven’t put much intelligence in the application, and if there’s only one application, or if all applications provide similar functionality—maybe even in similar ways—an API Gateway is probably a good choice. If there are several applications, and they provide different sets of functionality,
@@ -287,4 +248,5 @@ a better choice than one big API Gateway. On the other hand, if the system
 isn’t that big, an API Gateway can be simpler than BFFs.
 
 ## Resources
+
 * [Microservices in .NET 2nd edition](https://www.amazon.es/Microservices-NET-Core-Christian-Gammelgaard/dp/1617297925)
