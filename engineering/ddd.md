@@ -88,6 +88,65 @@ A good Service has three characteristics.
 Statelessness here means that any client can use any instance of a particular Service without regard to the instance’s individual history. The execution of a Service will use information that is accessible globally, and may even change that global information (that is, it may have side effects). But the Service does not hold state of its own that affects its own behavior, as most domain objects do. When a significant process or transformation in the domain is not a natural responsibility of an Entity or Value Object, add an operation to the model as a
 standalone interface declared as a Service. Define the interface in terms of the language of the model and mak e sure the operation name is part of the Ubiquitous Language. Make the Service stateless.
 
+### Aggregates
+
+An Aggregate is a cluster of associated objects that we treat as a unit for the purpose of data changes. Each Aggregate has a root and a boundary. The boundary defines what is inside the Aggregate. The root is a single, specific Entity contained in the Aggregate. The root is the only member of the Aggregate that outside objects are allowed to hold references to, although objects within the boundary may hold references to each other. Entities other than the root have local identity, but that identity needs to be distinguishable only within the Aggregate, because no outside object can ever see it out of the context of the root Entity.
+
+Invariants, which are consistency rules that must be maintained whenever data changes, will involve relationships between members of the Aggregate. Any rule that spans Aggregates will not be expected
+to be up-to-date at all times. Through event processing, batch processing, or other update mechanisms, other dependencies can be resolved within some specified time. But the invariants applied within an Aggregate will be enforced with the completion of each transaction.
+
+Rules to implement Aggregates:
+
+* The root Entity has global identity and is ultimately responsible for checking invariants.
+* Root Entities have global identity. Entities inside the boundary have local identity, unique only within the Aggregate.
+* Nothing outside the Aggregate boundary can hold a reference to anything inside, except to the root Entity. The root Entity can hand references to the internal Entities to other objects, but those objects can use them only transiently, and they may not hold on to the reference. The root may hand a copy of a Value Object to another object, and it doesn’t matter what happens to it, because it’s just a Value and no longer will have any association with the Aggregate.
+* As a corollary to the previous rule, only Aggregate roots can be obtained directly with database queries. All other objects must be found by traversal of associations.
+* Objects within the Aggregate can hold references to other Aggregate roots.
+* A delete operation must remove everything within the Aggregate boundary at once. (With garbage collection, this is easy. Because there are no outside references to anything but the root, delete the root
+and everything else will be collected.)
+* When a change to any object within the Aggregate boundary is committed, all invariants of the whole Aggregate must be satisfied.
+
+Cluster the Entities and Value Objects into Aggregates and define boundaries around each. Choose one Entity to be the root of each Aggregate, and control all access to the objects inside the boundary through the root. Allow external objects to hold references to the root only. Transient references to internal members can be passed out for use within a single operation only. Because the root controls access, it cannot be blindsided by changes to the internals. This arrangement makes it practicalto enforce all invariants for objects in the Aggregate and for the Aggregate as a whole in any state change.
+
+### Factory
+
+A program element whose responsibility is the creation of other objects is called a Factory. Just as the interface of an object should encapsulate its implementation, thus allowing a client to use the object’s behavior without knowing how it works, a Factory encapsulates the knowledge needed to create a complex object or Aggregate. It provides an interface that reflects the goals of the client and an abstract view of the created object.
+
+Shift the responsibility for creating instances of complex objects and Aggregates to a separate object, which may itself have no responsibility in the domain model but is still part of the domain design. Provide an interface that encapsulates all complex assembly and that does not require the client to reference the concrete classes of the objects
+being instantiated. Create entire Aggregates as a piece, enforcing their invariants.
+
+Basic requirements for a factory:
+
+* Each creation method is atomic and enforces all invariants of the created object or Aggregate. A Factory should only be able to produce an object in a consistent state. For an Entity, this means the creation of the entire Aggregate, with all invariants satisfied, but probably with
+optional elements still to be added. For an immutable Value Object, this means that all attributes are initialized to their correct final state. If the interface makes it possible to request an object that can’t be created correctly, then an exception should be raised or some other mechanism should be invoked that will ensure that no improper return value is possible.
+* The Factory should be abstracted to the type desired, rather than the concrete class(es) created.
+
+A Factory is very tightly coupled to its product, so a Factory should be attached only to an object that has a close natural relationship with the product. When there is something we want to hide—either the concrete implementation or the sheer complexity of construction—yet there doesn’t seem to be a natural host, we must create a dedicated Factory object or Service. A standalone Factory usually produces an entire Aggregate, handing out a reference to the root, and ensuring that the product Aggregate's invariants are enforced. If an object interior to an Aggregate needs a Factory, and the Aggregate root is not a reasonable home for it, then go ahead and make a standalone Factory. But respect the rules limiting access within an Aggregate, and make sure there are only transient references to the product from outside the Aggregate.
+
+### Repository
+
+A Repository represents all objects of a certain type as a conceptual set (usually emulated). It acts like a collection, except with more elaborate querying capability. Objects of the appropriate type are added and removed, and the machinery behind the Repository inserts them or deletes them from the database. This definition gathers a cohesive set of responsibilities for providing access to the roots of Aggregates from
+early life cycle through the end.
+
+Clients request objects from the Repository using query methods that select objects based on criteria specified by the client, typically the value of certain attributes. The Repository retrieves the requested object, encapsulating the machinery of database queries and metadata mapping. Repositories can implement a variety of queries that select objects based on whatever criteria the client requires. They can also return summary information, such as a count of how many instances meet some criteria. They can even return summary calculations, such as the total across all matching objects of some numerical attribute.
+
+F or each type of object that needs global access, create an object that can provide the illusion of an in-memory collection of all objects of that type. Set up access through a well-k nown global interface. Provide methods to add and remove objects, which will encapsulate the actual insertion or removal of data in the data store. Provide methods that select objects based on some criteria and return fully instantiated objects or collections of objects whose attribute values meet the criteria, thereby encapsulating the actual storage and query technology. Provide Repositories only for Aggregate roots that actually need direct access. Keep the client focused on the model, delegating all object storage and access to the Repositories.
+
+Advantages:
+
+* They present clients with a simple model for obtaining persistent objects and managing their life cycle.
+* They decouple application and domain design from persistence technology, multiple database strategies, or even multiple data sources.
+* They communicate design decisions about object access.
+* They allow easy substitution of a dummy implementation, for use in testing (typically using an inmemory collection).
+
+The easiest Repository to build has hard-coded queries with specific parameters. These queries can be various: retrieving an Entity by its identity (provided by almost all Repositories); requesting a collection of objects with a particular attribute value or a complex combination of parameters; selecting objects based on value ranges (such as date ranges); and even performing some calculations that fall within the general responsibility of a Repository (especially drawing on operations supported by the underlying database).
+
+Implementation will vary greatly, depending on the technology being used for persistence and the infrastructure you have. The ideal is to hide all the inner workings from the client (although not from the developer of the client), so that client code will be the same whether the data is stored in an object database, stored in a relational database, or simply held in memory. The Repository will delegate to the appropriate infrastructure services to get the job done. Encapsulating the mechanisms of storage, retrieval, and query is the most basic feature of a Repository implementation.
+
+* Abstract the type. A Repository “contains” all instances of a specific type, but this does not mean that you need one Repository for each class. The type could be an abstract superclass of a hierarchy. The type could be an interface whose implementers are not even hierarchically related. Or it could be a specific concrete class. Keep in mind that you may well face constraints imposed by the lack of such polymorphism in your database technology.
+* Take advantage of the decoupling from the client. You have more freedom to change the implementation of a Repository than you would if the client were calling the mechanisms directly. You can take advantage of this to optimize for performance, by varying the query technique or by caching objects in memory, freely switching persistence strategies at any time. You can facilitate testing of the client code and the domain objects by providing an easily manipulated, dummy in-memory strategy.
+* Leave transaction control to the client. Although the Repository will insert into and delete from the database, it will ordinarily not commit anything. It is tempting to commit after saving, for example, but the client presumably has the context to correctly initiate and commit units of work. Transaction management will be simpler if the Repository keeps its hands off.
+
 ## Bounded Context
 
 A bounded context delimits the applicability of a particular model so that team members have a clear and shared understanding of what has to be consistent and how it relates to other contexts. Within that context, work to keep the model logically unified, but do not worry about applicability outside those bounds. In other context, other models apply, with differences in terminology, in concepts and rules, and in dialects of the ubiquitous lanuage. By drawing an explicit boundary, you can keep the model pure, and therefore potent, where it is applicable. At the same time, you avoid confusion when shifting your attention to other contexts. Integration across the boundaries necessarily will involve some translation, which you can analyze explicitly.
