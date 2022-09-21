@@ -203,12 +203,79 @@ A Context Map is in the overlap between project management and software design. 
 
 ### Integration patterns
 
-* Partnership: Bounded contexts are integrated in an ad hoc manner.
-* Shared kernel: Two or more bounded contexts are integrated by sharing a limited overlapping model that belongs to all participating bounded contexts.
+* Partnership: Bounded Contexts are integrated in an ad hoc manner.
+* Shared Kernel: Two or more Bounded Contexts are integrated by sharing a limited overlapping model that belongs to all participating Bounded Contexts.
 * Conformist: The consumer conforms to the service provider’s model.
 * Anticorruption layer: The consumer translates the service provider’s model into a model that fits the consumer’s needs.
 * Open-host service: The service provider implements a published language—a model optimized for its consumers’ needs.
 * Separate ways: It’s less expensive to duplicate particular functionality than to collaborate and integrate it.
+
+## Large-scale structure
+
+A “large-scale structure” is a language that lets you discuss and understand the system in broad
+strokes. A set of high-level concepts or rules, or both, establishes a pattern of design for an entire system. This organizing principle can guide design as well as aid understanding. It helps coordinate independent work because there is a shared concept of the big picture: how the roles of various parts shape the whole. Devise a pattern of rules or roles and relationships that will span the entire system and that allows some understanding of each part’s place in the whole— even without detailed knowledge of the part’s responsibility.
+
+Structure may be confined to one Bounded Context but will usually span more than one, providing the
+conceptual organization to hold together all the teams and subsystems involved in the project. A good structure gives insight into the model and complements distillation. You can’t represent most large-scale structures in UML, and you don’t need to. Most large-scale structures shape and explain the model and design but do not appear in it. They provide an extra level of communication about the design.
+
+### Envolving order
+
+An up-front imposition of a large-scale structure is likely to be costly. As development proceeds, you will almost certainly find a more suitable structure, and you may even find that the prescribed structure is prohibiting you from taking a design route that would greatly clarify or simplify the application. You may be able to use some of the structure, but you’re forgoing opportunities. Your work slows down as you try workarounds or try to negotiate with the architects. But your managers think the architecture is done. It was supposed to make this application easy, so why aren’t you working on the application instead of dealing with all these architecture problems? The managers and architecture teams may even be open to input, but if each change is a heroic battle, it is too exhausting.
+
+Design free-for-alls produce systems no one can mak e sense of as a whole, and they are
+very difficult to maintain. But architectures can straitjack et a project with up-front
+design assumptions and tak e too much power away from the developers/designers of
+particular parts of the application. Soon, developers will dumb down the application to
+fit the structure, or they will subvert it and have no structure at all, bringing back the
+problems of uncoordinated development.
+
+The problem is not the existence of guiding rules, but rather the rigidity and source of those rules. If the rules governing the design really fit the circumstances, they will not get in the way but actually push development in a helpful direction, as well as provide consistency. Let this conceptual large-scale structure evolve with the application, possibly changing to a completely different type of structure along the way. Don’t overconstrain the detailed design and model decisions that must be made with detailed k nowledge.
+
+Large-scale structure should be applied when a structure can be found that greatly clarifies the system without forcing unnatural constraints on model development. Because an ill-fitting structure is worse than none, it is best not to shoot for comprehensiveness, but rather to find a minimal set that solves the problems that have emerged. Less is more. A large-scale structure can be very helpful and still have a few exceptions, but those exceptions need to be flagged somehow, so that developers can assume the structure is being followed unless otherwise noted. And if
+those exceptions start to get numerous, the structure needs to be changed or discarded.
+
+### System Metaphor
+
+Software designs tend to be very abstract and hard to grasp. Developers and users alik e
+need tangible ways to understand the system and share a view of the system as a whole.
+On one level, metaphor runs so deeply in the way we think that it pervades every design. Systems have “layers” that “lay on top” of each other. They have “kernels” at their “centers.” But sometimes a metaphor comes along that can convey the central theme of a whole design and provide a shared understanding among all team members. When this happens, the system is actually shaped by the metaphor. A developer will make design decisions consistent with the System Metaphor. This consistency will enable other developers to interpret the many parts of a complex system in terms of the same metaphor. The developers and experts have a reference point in discussions that may be more concrete than the model itself.
+
+A System Metaphor is a loose, easily understood, large-scale structure that it is harmonious with the object paradigm. Because the System Metaphor is only an analogy to the domain anyway, different models can map to it in an approximate way, which allows it to be applied in multiple Bounded Contexts, helping to coordinate work between them.
+
+When a concrete analogy to the system emerges that captures the imagination of team
+members and seems to lead think ing in a useful direction, adopt it as a large-scale
+structure. Organize the design around this metaphor and absorb it into the Ubiquitous Language. The System Metaphor should both facilitate communication about the
+system and guide development of it. This increases consistency in different parts of the
+system, potentially even across different Bounded Contexts. But because all
+metaphors are inexact, continually reexamine the metaphor for overextension or
+inaptness, and be ready to drop it if it gets in the way.
+
+### Responsability layers
+
+When each individual object has handcrafted responsibilities, there are no guidelines,
+no uniformity, and no ability to handle large swaths of the domain together. To give
+coherence to a large model, it is useful to impose some structure on the assignment of
+those responsibilities.
+
+Look at the conceptual dependencies in your model and the varying rates and sources
+of change of different parts of your domain. If you identify natural strata in the
+domain, cast them as broad abstract responsibilities. These responsibilities should tell a
+story of the high-level purpose and design of your system. Refactor the model so that
+the responsibilities of each domain object, Aggregate, and Module fit neatly within
+the responsibility of one layer.
+
+### Pluggable component framework
+
+W hen a variety of applications have to interoperate, all based on the same abstractions
+but designed independently, translations between multiple Bounded Contexts limit
+integration. A Shared Kernel is not feasible for teams that do not work closely
+together. Duplication and fragmentation raise costs of development and installation,
+and interoperability becomes very difficult.
+
+Distill an Abstract Core of interfaces and interactions and create a framework that
+allows diverse implementations of those interfaces to be freely substituted. Lik ewise,
+allow any application to use those components, so long as it operates strictly through
+the interfaces of the Abstract Core. High-level abstractions are identified and shared across the breadth of the system; specialization occurs in Modules. The central hub of the application is an Abstract Core within a Shared Kernel. But multiple Bounded Contexts can lie behind the encapsulated component interfaces, so that this structure can be especially convenient when many components are coming from many different sources, or when components are encapsulating preexisting software for integration.
 
 ## Essentials for Startegic Design Decision Making
 
