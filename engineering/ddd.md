@@ -4,21 +4,17 @@
 
 A business domain defines a company’s main area of activity. Generally speaking, it’s the service the company provides to its clients. A company can operate in multiple business domains. It’s important to note that companies may change their business domains often.
 
-To achieve its business domain’s goals and targets, a company has to operate in multiple subdomains. A subdomain is a fine-grained area of business activity. All of a company’s subdomains form its business domain: the service it provides to its customers. Implementing a single subdomain is not enough for a company to succeed; it’s just
-one building block in the overarching system. The subdomains have to interact with each other to achieve the company’s goals in its business domain.
+To achieve its business domain’s goals and targets, a company has to operate in multiple subdomains. A subdomain is a fine-grained area of business activity. All of a company’s subdomains form its business domain: the service it provides to its customers. Implementing a single subdomain is not enough for a company to succeed; it’s just one building block in the overarching system. The subdomains have to interact with each other to achieve the company’s goals in its business domain.
 
 ### Types of subdomain
 
 * Core: A core subdomain is what a company does differently from its competitors. This may involve inventing new products or services or reducing costs by optimizing existing processes.
 * Generic: Generic subdomains are business activities that all companies are performing in the same way. Like core subdomains, generic subdomains are generally complex and hard to implement. However, generic subdomains do not provide any competitive edge for the company. There is no need for innovation or optimization here: battletested implementations are widely available, and all companies use them.
-* Supporting: As the name suggests, supporting subdomains support the company’s business. However, contrary to core subdomains, supporting subdomains do not provide any competitive advantage. Supporting subdomains are simple. Their business logic resembles mostly data entry screens and ETL (extract, transform, load) operations; that is,
-the so-called CRUD (create, read, update, and delete) interfaces. These activity areas do not provide any competitive advantage for the company, and therefore do not require high entry barriers.
+* Supporting: As the name suggests, supporting subdomains support the company’s business. However, contrary to core subdomains, supporting subdomains do not provide any competitive advantage. Supporting subdomains are simple. Their business logic resembles mostly data entry screens and ETL (extract, transform, load) operations; that is, the so-called CRUD (create, read, update, and delete) interfaces. These activity areas do not provide any competitive advantage for the company, and therefore do not require high entry barriers.
 
 ### Domain expert
 
-Domain experts are subject matter experts who know all the intricacies
-of the business that we are going to model and implement in code. In other words, domain experts are knowledge authorities in the software’s business domain. The domain experts are neither the analysts gathering the requirements nor the engineers designing the system. Domain experts represent the business. They are the people who identified the business problem in the first place and from whom all business knowledge originates. Systems analysts and engineers are transforming their mental
-models of the business domain into software requirements and source code.
+Domain experts are subject matter experts who know all the intricacies of the business that we are going to model and implement in code. In other words, domain experts are knowledge authorities in the software’s business domain. The domain experts are neither the analysts gathering the requirements nor the engineers designing the system. Domain experts represent the business. They are the people who identified the business problem in the first place and from whom all business knowledge originates. Systems analysts and engineers are transforming their mental models of the business domain into software requirements and source code.
 
 ## Knowledge crunching
 
@@ -54,15 +50,11 @@ The model-based language should be used among developers to describe not only ar
 
 ### Entities
 
-An object defined primarily by its identity is called an Entity. Entities have special modeling and design considerations. They have life cycles that can radically change their form and content, but a thread of
-continuity must be maintained. Their identities must be defined so that they can be effectively tracked. Their class definitions, responsibilities, attributes, and associations should revolve around who they are, rather than the particular attributes they carry. Even for Entities that don’t transform so radically or have such complicated life cycles, placing them in the semantic category leads to more lucid models and more robust implementations.
+An object defined primarily by its identity is called an Entity. Entities have special modeling and design considerations. They have life cycles that can radically change their form and content, but a thread of continuity must be maintained. Their identities must be defined so that they can be effectively tracked. Their class definitions, responsibilities, attributes, and associations should revolve around who they are, rather than the particular attributes they carry. Even for Entities that don’t transform so radically or have such complicated life cycles, placing them in the semantic category leads to more lucid models and more robust implementations.
 
-W hen an object is distinguished by its identity, rather than its attributes, mak e this primary to its definition in the model. Keep the class definition simple and focused on life cycle continuity and identity. Define a means of distinguishing each object regardless of its form or history. Be alert to requirements that call for matching objects
-by attributes. Define an operation that is guaranteed to produce a unique result for each object, possibly by attaching a symbol that is guaranteed unique. This means of identification may come from the outside, or it may be an arbitrary identifier created by and for the system, but it must correspond to the identity distinctions in the model.
-The model must define what it means to be the same thing.
+When an object is distinguished by its identity, rather than its attributes, make this primary to its definition in the model. Keep the class definition simple and focused on life cycle continuity and identity. Define a means of distinguishing each object regardless of its form or history. Be alert to requirements that call for matching objects by attributes. Define an operation that is guaranteed to produce a unique result for each object, possibly by attaching a symbol that is guaranteed unique. This means of identification may come from the outside, or it may be an arbitrary identifier created by and for the system, but it must correspond to the identity distinctions in the model. The model must define what it means to be the same thing.
 
-It is natural to think about the attributes when modeling an object, and it is quite important to think about its behavior. But the most basic responsibility of Entities is to establish continuity so that behavior can be clear and predictable. They do this best if they are kept spare. Rather than focusing on the attributes or even the behavior, strip the Entity object’s definition down to the most intrinsic characteristics, particularly those that identify it or are commonly used to find or match it. Add only behavior that is essential to the concept and
-attributes that are required by that behavior. Beyond that, look to remove behavior and attributes into other objects associated with the core Entity.
+It is natural to think about the attributes when modeling an object, and it is quite important to think about its behavior. But the most basic responsibility of Entities is to establish continuity so that behavior can be clear and predictable. They do this best if they are kept spare. Rather than focusing on the attributes or even the behavior, strip the Entity object’s definition down to the most intrinsic characteristics, particularly those that identify it or are commonly used to find or match it. Add only behavior that is essential to the concept and attributes that are required by that behavior. Beyond that, look to remove behavior and attributes into other objects associated with the core Entity.
 
 ### Value objects
 
@@ -72,12 +64,9 @@ Defining Value Objects and designating them as immutable is a case of following 
 
 ### Services
 
-A Service is an operation offered as an interface that stands alone in the model, without encapsulating state, as Entities and Value Objects do. Services are a common pattern in technical frameworks, but they
-can also apply in the domain layer.
+A Service is an operation offered as an interface that stands alone in the model, without encapsulating state, as Entities and Value Objects do. Services are a common pattern in technical frameworks, but they can also apply in the domain layer.
 
-The name service emphasizes the relationship with other objects. Unlike Entities and Value Objects, it is defined purely in terms of what it can do for a client. A Service tends to be named for an activity, rather than
-an entity—a verb rather than a noun. A Service can still have an abstract, intentional definition; it just has a different flavor than the definition of an object. A Service should still have a defined responsibility, and that responsibility and the interface fulfilling it should be defined as part of the domain model. Operation names
-should come from the Ubiquitous Language or be introduced into it. Parameters and results should be domain objects.
+The name service emphasizes the relationship with other objects. Unlike Entities and Value Objects, it is defined purely in terms of what it can do for a client. A Service tends to be named for an activity, rather than an entity—a verb rather than a noun. A Service can still have an abstract, intentional definition; it just has a different flavor than the definition of an object. A Service should still have a defined responsibility, and that responsibility and the interface fulfilling it should be defined as part of the domain model. Operation names should come from the Ubiquitous Language or be introduced into it. Parameters and results should be domain objects.
 
 A good Service has three characteristics.
 
@@ -85,15 +74,13 @@ A good Service has three characteristics.
 * The interface is defined in terms of other elements of the domain model.
 * The operation is stateless.
 
-Statelessness here means that any client can use any instance of a particular Service without regard to the instance’s individual history. The execution of a Service will use information that is accessible globally, and may even change that global information (that is, it may have side effects). But the Service does not hold state of its own that affects its own behavior, as most domain objects do. When a significant process or transformation in the domain is not a natural responsibility of an Entity or Value Object, add an operation to the model as a
-standalone interface declared as a Service. Define the interface in terms of the language of the model and mak e sure the operation name is part of the Ubiquitous Language. Make the Service stateless.
+Statelessness here means that any client can use any instance of a particular Service without regard to the instance’s individual history. The execution of a Service will use information that is accessible globally, and may even change that global information (that is, it may have side effects). But the Service does not hold state of its own that affects its own behavior, as most domain objects do. When a significant process or transformation in the domain is not a natural responsibility of an Entity or Value Object, add an operation to the model as a standalone interface declared as a Service. Define the interface in terms of the language of the model and mak e sure the operation name is part of the Ubiquitous Language. Make the Service stateless.
 
 ### Aggregates
 
 An Aggregate is a cluster of associated objects that we treat as a unit for the purpose of data changes. Each Aggregate has a root and a boundary. The boundary defines what is inside the Aggregate. The root is a single, specific Entity contained in the Aggregate. The root is the only member of the Aggregate that outside objects are allowed to hold references to, although objects within the boundary may hold references to each other. Entities other than the root have local identity, but that identity needs to be distinguishable only within the Aggregate, because no outside object can ever see it out of the context of the root Entity.
 
-Invariants, which are consistency rules that must be maintained whenever data changes, will involve relationships between members of the Aggregate. Any rule that spans Aggregates will not be expected
-to be up-to-date at all times. Through event processing, batch processing, or other update mechanisms, other dependencies can be resolved within some specified time. But the invariants applied within an Aggregate will be enforced with the completion of each transaction.
+Invariants, which are consistency rules that must be maintained whenever data changes, will involve relationships between members of the Aggregate. Any rule that spans Aggregates will not be expected to be up-to-date at all times. Through event processing, batch processing, or other update mechanisms, other dependencies can be resolved within some specified time. But the invariants applied within an Aggregate will be enforced with the completion of each transaction.
 
 Rules to implement Aggregates:
 
@@ -102,35 +89,31 @@ Rules to implement Aggregates:
 * Nothing outside the Aggregate boundary can hold a reference to anything inside, except to the root Entity. The root Entity can hand references to the internal Entities to other objects, but those objects can use them only transiently, and they may not hold on to the reference. The root may hand a copy of a Value Object to another object, and it doesn’t matter what happens to it, because it’s just a Value and no longer will have any association with the Aggregate.
 * As a corollary to the previous rule, only Aggregate roots can be obtained directly with database queries. All other objects must be found by traversal of associations.
 * Objects within the Aggregate can hold references to other Aggregate roots.
-* A delete operation must remove everything within the Aggregate boundary at once. (With garbage collection, this is easy. Because there are no outside references to anything but the root, delete the root
-and everything else will be collected.)
+* A delete operation must remove everything within the Aggregate boundary at once. (With garbage collection, this is easy. Because there are no outside references to anything but the root, delete the root and everything else will be collected.)
 * When a change to any object within the Aggregate boundary is committed, all invariants of the whole Aggregate must be satisfied.
 
-Cluster the Entities and Value Objects into Aggregates and define boundaries around each. Choose one Entity to be the root of each Aggregate, and control all access to the objects inside the boundary through the root. Allow external objects to hold references to the root only. Transient references to internal members can be passed out for use within a single operation only. Because the root controls access, it cannot be blindsided by changes to the internals. This arrangement makes it practicalto enforce all invariants for objects in the Aggregate and for the Aggregate as a whole in any state change.
+Cluster the Entities and Value Objects into Aggregates and define boundaries around each. Choose one Entity to be the root of each Aggregate, and control all access to the objects inside the boundary through the root. Allow external objects to hold references to the root only. Transient references to internal members can be passed out for use within a single operation only. Because the root controls access, it cannot be blindsided by changes to the internals. This arrangement makes it practical to enforce all invariants for objects in the Aggregate and for the Aggregate as a whole in any state change.
 
 ### Factory
 
 A program element whose responsibility is the creation of other objects is called a Factory. Just as the interface of an object should encapsulate its implementation, thus allowing a client to use the object’s behavior without knowing how it works, a Factory encapsulates the knowledge needed to create a complex object or Aggregate. It provides an interface that reflects the goals of the client and an abstract view of the created object.
 
-Shift the responsibility for creating instances of complex objects and Aggregates to a separate object, which may itself have no responsibility in the domain model but is still part of the domain design. Provide an interface that encapsulates all complex assembly and that does not require the client to reference the concrete classes of the objects
-being instantiated. Create entire Aggregates as a piece, enforcing their invariants.
+Shift the responsibility for creating instances of complex objects and Aggregates to a separate object, which may itself have no responsibility in the domain model but is still part of the domain design. Provide an interface that encapsulates all complex assembly and that does not require the client to reference the concrete classes of the objects being instantiated. Create entire Aggregates as a piece, enforcing their invariants.
 
 Basic requirements for a factory:
 
-* Each creation method is atomic and enforces all invariants of the created object or Aggregate. A Factory should only be able to produce an object in a consistent state. For an Entity, this means the creation of the entire Aggregate, with all invariants satisfied, but probably with
-optional elements still to be added. For an immutable Value Object, this means that all attributes are initialized to their correct final state. If the interface makes it possible to request an object that can’t be created correctly, then an exception should be raised or some other mechanism should be invoked that will ensure that no improper return value is possible.
+* Each creation method is atomic and enforces all invariants of the created object or Aggregate. A Factory should only be able to produce an object in a consistent state. For an Entity, this means the creation of the entire Aggregate, with all invariants satisfied, but probably with optional elements still to be added. For an immutable Value Object, this means that all attributes are initialized to their correct final state. If the interface makes it possible to request an object that can’t be created correctly, then an exception should be raised or some other mechanism should be invoked that will ensure that no improper return value is possible.
 * The Factory should be abstracted to the type desired, rather than the concrete class(es) created.
 
 A Factory is very tightly coupled to its product, so a Factory should be attached only to an object that has a close natural relationship with the product. When there is something we want to hide—either the concrete implementation or the sheer complexity of construction—yet there doesn’t seem to be a natural host, we must create a dedicated Factory object or Service. A standalone Factory usually produces an entire Aggregate, handing out a reference to the root, and ensuring that the product Aggregate's invariants are enforced. If an object interior to an Aggregate needs a Factory, and the Aggregate root is not a reasonable home for it, then go ahead and make a standalone Factory. But respect the rules limiting access within an Aggregate, and make sure there are only transient references to the product from outside the Aggregate.
 
 ### Repository
 
-A Repository represents all objects of a certain type as a conceptual set (usually emulated). It acts like a collection, except with more elaborate querying capability. Objects of the appropriate type are added and removed, and the machinery behind the Repository inserts them or deletes them from the database. This definition gathers a cohesive set of responsibilities for providing access to the roots of Aggregates from
-early life cycle through the end.
+A Repository represents all objects of a certain type as a conceptual set (usually emulated). It acts like a collection, except with more elaborate querying capability. Objects of the appropriate type are added and removed, and the machinery behind the Repository inserts them or deletes them from the database. This definition gathers a cohesive set of responsibilities for providing access to the roots of Aggregates from early life cycle through the end.
 
 Clients request objects from the Repository using query methods that select objects based on criteria specified by the client, typically the value of certain attributes. The Repository retrieves the requested object, encapsulating the machinery of database queries and metadata mapping. Repositories can implement a variety of queries that select objects based on whatever criteria the client requires. They can also return summary information, such as a count of how many instances meet some criteria. They can even return summary calculations, such as the total across all matching objects of some numerical attribute.
 
-F or each type of object that needs global access, create an object that can provide the illusion of an in-memory collection of all objects of that type. Set up access through a well-k nown global interface. Provide methods to add and remove objects, which will encapsulate the actual insertion or removal of data in the data store. Provide methods that select objects based on some criteria and return fully instantiated objects or collections of objects whose attribute values meet the criteria, thereby encapsulating the actual storage and query technology. Provide Repositories only for Aggregate roots that actually need direct access. Keep the client focused on the model, delegating all object storage and access to the Repositories.
+For each type of object that needs global access, create an object that can provide the illusion of an in-memory collection of all objects of that type. Set up access through a well-known global interface. Provide methods to add and remove objects, which will encapsulate the actual insertion or removal of data in the data store. Provide methods that select objects based on some criteria and return fully instantiated objects or collections of objects whose attribute values meet the criteria, thereby encapsulating the actual storage and query technology. Provide Repositories only for Aggregate roots that actually need direct access. Keep the client focused on the model, delegating all object storage and access to the Repositories.
 
 Advantages:
 
@@ -149,7 +132,7 @@ Implementation will vary greatly, depending on the technology being used for per
 
 ## Supple design
 
-Supple design is the complement to deep modeling. Once you’ve dug out implicit concepts and made them explicit, you have the raw material. Through the iterative cycle, you hammer that material into a useful shape, cultivating a model that simply and clearly captures the key concerns, and shaping a design that allows a client developer to really put that model to work. Development of the design and code leads to insight that refines model concepts. Here are some patterns that  contribute to Supple design:
+Supple design is the complement to deep modeling. Once you’ve dug out implicit concepts and made them explicit, you have the raw material. Through the iterative cycle, you hammer that material into a useful shape, cultivating a model that simply and clearly captures the key concerns, and shaping a design that allows a client developer to really put that model to work. Development of the design and code leads to insight that refines model concepts.
 
 ### Intention-Revealing Interfaces
 
@@ -165,24 +148,23 @@ Place as much of the logic of the program as possible into functions, operations
 
 ### Assertions
 
-When the side effects of operations are only defined implicitly by their
-implementation, designs with a lot of delegation become a tangle of cause and effect. The only way to understand a program is to trace execution through branching paths. The value of encapsulation is lost. The necessity of tracing concrete execution defeats abstraction.
+When the side effects of operations are only defined implicitly by their implementation, designs with a lot of delegation become a tangle of cause and effect. The only way to understand a program is to trace execution through branching paths. The value of encapsulation is lost. The necessity of tracing concrete execution defeats abstraction.
 
 State post-conditions of operations and invariants of classes and Aggregates. If Assertions cannot be coded directly in your programming language, write automated unit tests for them. Write them into documentation or diagrams where it fits the style of the project’s development process. Seek models with coherent sets of concepts, which lead a developer to infer the intended Assertions, accelerating the learning curve and reducing the risk of contradictory code.
 
 ### Conceptual contours
 
-W hen elements of a model or design are embedded in a monolithic construct, their functionality gets duplicated. The external interface doesn’t say everything a client might care about. Their meaning is hard to understand, because different concepts are mixed together. O n the other hand, break ing down classes and methods can pointlessly complicate the client, forcing client objects to understand how tiny pieces fit together. Worse, a concept can be lost completely. H alf of a uranium atom is not uranium. And of course, it isn’t just grain size that counts, but just where the grain runs.
+When elements of a model or design are embedded in a monolithic construct, their functionality gets duplicated. The external interface doesn’t say everything a client might care about. Their meaning is hard to understand, because different concepts are mixed together. On the other hand, breaking down classes and methods can pointlessly complicate the client, forcing client objects to understand how tiny pieces fit together. Worse, a concept can be lost completely. Half of a uranium atom is not uranium. And of course, it isn’t just grain size that counts, but just where the grain runs.
 
 Decompose design elements (operations, interfaces, classes, and Aggregates) into cohesive units, taking into consideration your intuition of the important divisions in the domain. Observe the axes of change and stability through successive refactorings and look for the underlying Conceptual Contours that explain these shearing patterns. Align the model with the consistent aspects of the domain that make it a viable area of knowledge in the first place.
 
 ### Standalone Classes
 
-Even within a Module, the difficulty of interpreting a design increases wildly as dependencies are added. This adds to mental overload, limiting the design complexity a developer can handle. Implicit concepts contribute to this load even more than explicit references. Try to factor the most intricate computations into Standalone Classess, perhaps by modeling Value Objects held by the more connected classes. Low coupling is a basic way to reduce conceptual overload. A Standalone Class is an extreme of low coupling.
+Even within a Module, the difficulty of interpreting a design increases wildly as dependencies are added. This adds to mental overload, limiting the design complexity a developer can handle. Implicit concepts contribute to this load even more than explicit references. Try to factor the most intricate computations into Standalone Classess, perhaps by modeling Value Objects held by the more connected classes. Low coupling is a basic way to reduce conceptual overload. A Standalone Class is an extreme example of low coupling.
 
 ### Closure of Operations
 
-W here it fits, define an operation whose return type is the same as the type of its argument(s). If the implementer has state that is used in the computation, then the implementer is effectively an argument of the operation, so the argumen (s) and return value should be of the same type as the implementer. Such an operation is closed under the set of instances of that type. A closed operation provides a high-level interface without introducing any dependency on other concepts.
+Where it fits, define an operation whose return type is the same as the type of its argument(s). If the implementer has state that is used in the computation, then the implementer is effectively an argument of the operation, so the argument(s) and return value should be of the same type as the implementer. Such an operation is closed under the set of instances of that type. A closed operation provides a high-level interface without introducing any dependency on other concepts.
 
 ## Bounded Context
 
@@ -236,46 +218,24 @@ those exceptions start to get numerous, the structure needs to be changed or dis
 
 ### System Metaphor
 
-Software designs tend to be very abstract and hard to grasp. Developers and users alik e
-need tangible ways to understand the system and share a view of the system as a whole.
-On one level, metaphor runs so deeply in the way we think that it pervades every design. Systems have “layers” that “lay on top” of each other. They have “kernels” at their “centers.” But sometimes a metaphor comes along that can convey the central theme of a whole design and provide a shared understanding among all team members. When this happens, the system is actually shaped by the metaphor. A developer will make design decisions consistent with the System Metaphor. This consistency will enable other developers to interpret the many parts of a complex system in terms of the same metaphor. The developers and experts have a reference point in discussions that may be more concrete than the model itself.
+Software designs tend to be very abstract and hard to grasp. Developers and users alike need tangible ways to understand the system and share a view of the system as a whole. On one level, metaphor runs so deeply in the way we think that it pervades every design. Systems have “layers” that “lay on top” of each other. They have “kernels” at their “centers.” But sometimes a metaphor comes along that can convey the central theme of a whole design and provide a shared understanding among all team members. When this happens, the system is actually shaped by the metaphor. A developer will make design decisions consistent with the System Metaphor. This consistency will enable other developers to interpret the many parts of a complex system in terms of the same metaphor. The developers and experts have a reference point in discussions that may be more concrete than the model itself.
 
 A System Metaphor is a loose, easily understood, large-scale structure that it is harmonious with the object paradigm. Because the System Metaphor is only an analogy to the domain anyway, different models can map to it in an approximate way, which allows it to be applied in multiple Bounded Contexts, helping to coordinate work between them.
 
-When a concrete analogy to the system emerges that captures the imagination of team
-members and seems to lead think ing in a useful direction, adopt it as a large-scale
-structure. Organize the design around this metaphor and absorb it into the Ubiquitous Language. The System Metaphor should both facilitate communication about the
-system and guide development of it. This increases consistency in different parts of the
-system, potentially even across different Bounded Contexts. But because all
-metaphors are inexact, continually reexamine the metaphor for overextension or
+When a concrete analogy to the system emerges that captures the imagination of team members and seems to lead think ing in a useful direction, adopt it as a large-scale structure. Organize the design around this metaphor and absorb it into the Ubiquitous Language. The System Metaphor should both facilitate communication about the system and guide development of it. This increases consistency in different parts of the system, potentially even across different Bounded Contexts. But because all metaphors are inexact, continually reexamine the metaphor for overextension or
 inaptness, and be ready to drop it if it gets in the way.
 
 ### Responsability layers
 
-When each individual object has handcrafted responsibilities, there are no guidelines,
-no uniformity, and no ability to handle large swaths of the domain together. To give
-coherence to a large model, it is useful to impose some structure on the assignment of
-those responsibilities.
+When each individual object has handcrafted responsibilities, there are no guidelines, no uniformity, and no ability to handle large swaths of the domain together. To give coherence to a large model, it is useful to impose some structure on the assignment of those responsibilities.
 
-Look at the conceptual dependencies in your model and the varying rates and sources
-of change of different parts of your domain. If you identify natural strata in the
-domain, cast them as broad abstract responsibilities. These responsibilities should tell a
-story of the high-level purpose and design of your system. Refactor the model so that
-the responsibilities of each domain object, Aggregate, and Module fit neatly within
-the responsibility of one layer.
+Look at the conceptual dependencies in your model and the varying rates and sources of change of different parts of your domain. If you identify natural strata in the domain, cast them as broad abstract responsibilities. These responsibilities should tell a story of the high-level purpose and design of your system. Refactor the model so that the responsibilities of each domain object, Aggregate, and Module fit neatly within the responsibility of one layer.
 
 ### Pluggable component framework
 
-W hen a variety of applications have to interoperate, all based on the same abstractions
-but designed independently, translations between multiple Bounded Contexts limit
-integration. A Shared Kernel is not feasible for teams that do not work closely
-together. Duplication and fragmentation raise costs of development and installation,
-and interoperability becomes very difficult.
+When a variety of applications have to interoperate, all based on the same abstractions but designed independently, translations between multiple Bounded Contexts limit integration. A Shared Kernel is not feasible for teams that do not work closely together. Duplication and fragmentation raise costs of development and installation, and interoperability becomes very difficult.
 
-Distill an Abstract Core of interfaces and interactions and create a framework that
-allows diverse implementations of those interfaces to be freely substituted. Lik ewise,
-allow any application to use those components, so long as it operates strictly through
-the interfaces of the Abstract Core. High-level abstractions are identified and shared across the breadth of the system; specialization occurs in Modules. The central hub of the application is an Abstract Core within a Shared Kernel. But multiple Bounded Contexts can lie behind the encapsulated component interfaces, so that this structure can be especially convenient when many components are coming from many different sources, or when components are encapsulating preexisting software for integration.
+Distill an Abstract Core of interfaces and interactions and create a framework that allows diverse implementations of those interfaces to be freely substituted. Lik ewise, allow any application to use those components, so long as it operates strictly through the interfaces of the Abstract Core. High-level abstractions are identified and shared across the breadth of the system; specialization occurs in Modules. The central hub of the application is an Abstract Core within a Shared Kernel. But multiple Bounded Contexts can lie behind the encapsulated component interfaces, so that this structure can be especially convenient when many components are coming from many different sources, or when components are encapsulating preexisting software for integration.
 
 ## Essentials for Startegic Design Decision Making
 
@@ -289,8 +249,7 @@ Creating an organizing principle, large-scale structure, or distillation of such
 
 ### The plan must allow for evolution
 
-Effective software development is a highly dynamic process. When the highest level of decisions is set in stone, the team has fewer options when it must respond to change. EVOLVING ORDER avoids this trap by
-emphasizing ongoing change to the large-scale structure in response to deepening insight. When too many design decisions are preordained, the development team can be hobbled, without the flexibility to solve the problems they are charged with. So, while a harmonizing principle can be valuable, it must grow and change with the ongoing life of the development project, and it must not take too much power away from the application developers, whose job is hard enough as it is. With strong feedback, innovations emerge as obstacles are encountered in building applications and as unexpected opportunities are discovered.
+Effective software development is a highly dynamic process. When the highest level of decisions is set in stone, the team has fewer options when it must respond to change. Envolving order avoids this trap by emphasizing ongoing change to the large-scale structure in response to deepening insight. When too many design decisions are preordained, the development team can be hobbled, without the flexibility to solve the problems they are charged with. So, while a harmonizing principle can be valuable, it must grow and change with the ongoing life of the development project, and it must not take too much power away from the application developers, whose job is hard enough as it is. With strong feedback, innovations emerge as obstacles are encountered in building applications and as unexpected opportunities are discovered.
 
 ### Architecture teams must not siphon off all the best and brightest
 
