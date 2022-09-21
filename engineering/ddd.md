@@ -210,6 +210,39 @@ A Context Map is in the overlap between project management and software design. 
 * Open-host service: The service provider implements a published language—a model optimized for its consumers’ needs.
 * Separate ways: It’s less expensive to duplicate particular functionality than to collaborate and integrate it.
 
+## Essentials for Startegic Design Decision Making
+
+### Decisions must reach the entire team
+
+Obviously, if everyone doesn’t know the strategy and follow it, it is irrelevant. This requirement leads people to organize around centralized architecture teams with official “authority”—so that the same rules will be applied everywhere. Ironically, ivory tower architects are often ignored or bypassed. Developers have no choice when the architects’ lack of feedback from hands-on attempts to apply their own rules to real applications results in impractical schemes. On a project with very good communication, a strategic design that emerges from the application team may actually reach everyone more effectively. The strategy will be relevant, and it will have the authority that attaches to intelligent community decisions. Whatever the system, be less concerned with the authority bestowed by management than with the actual relationship the developers have with the strategy.
+
+### The decision process must absorb feecback
+
+Creating an organizing principle, large-scale structure, or distillation of such subtlety requires a really deep understanding of the needs of the project and the concepts of the domain. The only people who have that depth of knowledge are the members of the application development team. This explains why application architectures created by architecture teams are so seldom helpful, despite the undeniable talent of many of the architects. Unlike technical infrastructure and architectures, strategic design does not itself involve writing a lot of code, although it influences all development. What it does require is involvement with the application development teams. An experienced architect may be able to listen to ideas coming from various teams and facilitate the development of a generalized solution.
+
+### The plan must allow for evolution
+
+Effective software development is a highly dynamic process. When the highest level of decisions is set in stone, the team has fewer options when it must respond to change. EVOLVING ORDER avoids this trap by
+emphasizing ongoing change to the large-scale structure in response to deepening insight. When too many design decisions are preordained, the development team can be hobbled, without the flexibility to solve the problems they are charged with. So, while a harmonizing principle can be valuable, it must grow and change with the ongoing life of the development project, and it must not take too much power away from the application developers, whose job is hard enough as it is. With strong feedback, innovations emerge as obstacles are encountered in building applications and as unexpected opportunities are discovered.
+
+### Architecture teams must not siphon off all the best and brightest
+
+Design at this level calls for sophistication that is probably in short supply. Managers tend to move the most technically talented developers into architecture teams and infrastructure teams, because they want to leverage the skills of these advanced designers. For their part, the developers are attracted to the opportunity to have a broader impact or to work on “more interesting” problems. And there is prestige attached to being a member of an elite team.
+
+Conversely, such teams almost never include the developer who perhaps has weaker design skills but who has the most extensive experience in the domain. Strategic design is not a purely technical task; cutting themselves off from developers with deep domain knowledge hobbles the architects’ efforts further. And domain experts are needed too. It is essential to have strong designers on all application teams. It is essential to have domain knowledge on any team attempting strategic design. It may simply be necessary to hire more advanced designers. It may help to keep architecture teams part-time.
+
+### Strategic design requires minimalism and humility
+
+Distillation and minimalism are essential to any good design work, but minimalism is even more critical for strategic design. Even the slightest ill fit has a terrible potential for getting in the way. Separate architecture teams have to be especially careful because they have less feel for the obstacles they might be placing in front of application teams. At the same time, the architects’ enthusiasm for their primary responsibility makes them more likely to get carried away.
+
+Instead, we have to discipline ourselves to produce organizing principles and core models that are pared down to contain nothing that does not significantly improve the clarity of the design. The truth is, almost everything gets in the way of something, so each element had better be worth it. Realizing that your best idea is likely to get in somebody’s way takes humility.
+
+### Objects are specialists; developers are generalists
+
+The essence of good object design is to give each object a clear and narrow responsibility and to reduce interdependence to an absolute minimum. Sometimes we try to make interactions on teams as tidy as they should be in our software. A good project has lots of people sticking their nose in other people’s business. Developers play with frameworks. Architects write application code. Everyone talks to everyone. It is efficiently chaotic. Make the objects into specialists; let the developers be generalists.
+
+Creating a supple design based on a deep model is an advanced design activity, but the details are so important that it has to be done by someone working with the code. Strategic design emerges out of application design, yet it requires a big-picture view of activity, possibly spanning multiple teams. People love to find ways to chop up tasks so that design experts don’t have to know the business and domain experts don’t have to understand technology. There is a limit to how much an individual can learn, but overspecialization takes the steam out of domain-driven design.
+
 ## References
 
 [Domain-Driven Design: Tackling Complexity in the Heart of Software](https://www.amazon.com/-/es/Eric-Evans/dp/0321125215)
