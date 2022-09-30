@@ -42,3 +42,7 @@ first phase, a set of software engineering guidelines is established for the sys
 ### Traceability
 
 Traceability is a software engineering term that refers to documented links between software engineering work products (e.g., requirements and test cases). A traceability matrix allows a requirements engineer to represent the relationship between requirements and other software engineering work products. Rows of the traceability matrix are labeled using requirement names, and columns can be labeled with the name of a software engineering work product (e.g., a design element or a test case). A matrix cell is marked to indicate the presence of a link between the two. The traceability matrices can support a variety of engineering development activities. They can provide continuity for developers as a project moves from one project phase to another, regardless of the process model being used. Traceability matrices often can be used to ensure the engineering work products have taken all requirements into account.
+
+## References
+
+[Software Engineering a Practitioner's Approach 9th Edition](https://www.amazon.com/-/es/Roger-Pressman-dp-1259872971/dp/1259872971)
